@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'auth_screens.dart';
@@ -5,6 +7,10 @@ import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   await Auth.restore();
   runApp(const MedApp());
 }
